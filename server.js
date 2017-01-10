@@ -3,6 +3,7 @@ const hbs = require('hbs');
 const fs = require('fs');
 var app = express();
 
+const port = process.env.PORT || 3300;
 
 hbs.registerPartials(__dirname+'/views/partials')
 app.set('view engine','hbs');
@@ -13,19 +14,19 @@ app.use((req, res, next) => {
   var log = `${now}: ${req.method}::${req.url} `;
 fs.appendFile('server.log',log+'\n',(err)=>{
   if(err){
-    xonsole.lof('Unable to connect');
+    console.lof('Unable to connect');
   }
 });
   console.log(`${now}: ${req.method}::${req.url} `);
 next();
 });
 
-app.use((req, res, next) => {
-  res.render('maintaince.hbs', {
-    pageTitle:'Maintaince Page',
-    welcome:'Welcome message'
-  });
-});
+// app.use((req, res, next) => {
+//   res.render('maintaince.hbs', {
+//     pageTitle:'Maintaince Page',
+//     welcome:'Welcome message'
+//   });
+// });
 hbs.registerHelper('getCurrentYear', ()=>{
   return new Date().getFullYear()
 });
@@ -46,4 +47,4 @@ app.get('/about',(req, res)=>{
 });
 // });
 
-app.listen(3300);
+app.listen(port);
